@@ -22,6 +22,8 @@ out/
 
 ### Gradle
 .gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
 
 ### Personal Stuff
 src/main/kotlin/aoc18/util/MyAoCSettings.kt
