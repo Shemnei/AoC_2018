@@ -54,6 +54,10 @@ object AoC {
             setRequestProperty("Cookie", "session=$sessionToken")
             println("Response Code: $responseCode")
 
+            if (responseCode != 200) {
+                throw IllegalArgumentException("No input found for $url")
+            }
+
             BufferedReader(InputStreamReader(inputStream)).use {
                 val response = StringBuffer()
 

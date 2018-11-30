@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    compile files("libs/klog-1.0.0.jar")
 }
 
 compileKotlin {
