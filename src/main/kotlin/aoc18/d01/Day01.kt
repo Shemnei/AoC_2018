@@ -1,9 +1,6 @@
 package aoc18.d01
 
-import aoc18.util.AoC
-import aoc18.util.Day
-import aoc18.util.MyAoCSettings
-import aoc18.util.cycle
+import aoc18.util.*
 
 object Day01 : Day<List<Int>>() {
 
@@ -13,11 +10,9 @@ object Day01 : Day<List<Int>>() {
 
     override fun taskTwo(input: List<Int>): String {
         val frequencies = mutableSetOf(0)
-        var freq = 0
-        return input.cycle().map {
-            freq += it
-            frequencies.add(freq)
-        }.first { !it }.let { freq.toString() }
+        return input.cycle().accumulate().first {
+            !frequencies.add(it)
+        }.toString()
     }
 }
 
