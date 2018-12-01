@@ -1,7 +1,5 @@
 package aoc18.util
 
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.net.URL
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -58,16 +56,7 @@ object AoC {
                 throw IllegalArgumentException("No input found for $url")
             }
 
-            BufferedReader(InputStreamReader(inputStream)).use {
-                val response = StringBuffer()
-
-                var inputLine = it.readLine()
-                while (inputLine != null) {
-                    response.append(inputLine)
-                    inputLine = it.readLine()
-                }
-                return response.toString()
-            }
+            return inputStream.readAllBytes().toString(Charsets.UTF_8).trim()
         }
     }
 }
