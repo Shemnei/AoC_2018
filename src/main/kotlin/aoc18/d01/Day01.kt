@@ -12,13 +12,12 @@ object Day01 : Day<List<Int>>() {
     override fun taskOne(input: List<Int>) = input.sum().toString()
 
     override fun taskTwo(input: List<Int>): String {
-        val seenFrequencies = mutableSetOf<Int>()
+        val frequencies = mutableSetOf(0)
         var freq = 0
         return input.cycle().map {
-            seenFrequencies += freq
             freq += it
-            freq
-        }.first { it in seenFrequencies }.toString()
+            frequencies.add(freq)
+        }.first { !it }.let { freq.toString() }
     }
 }
 
