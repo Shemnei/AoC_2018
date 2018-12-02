@@ -56,7 +56,7 @@ object AoC {
                 throw IllegalArgumentException("No input found for $url")
             }
 
-            return inputStream.readAllBytes().toString(Charsets.UTF_8).trim()
+            return inputStream.readBytes().toString(Charsets.UTF_8).trim()
         }
     }
 }

@@ -18,7 +18,7 @@ abstract class Day<T>(year: Int = - 1, day: Int = -1) {
     val year: Int = if (year > 2014) {
         year
     } else {
-        val yearPart = Regex("""\d{2}|\d{4}""").find(this.javaClass.packageName.split(".").first())?.value
+        val yearPart = Regex("""\d{2}|\d{4}""").find(this.javaClass.`package`.name.split(".").first())?.value
             ?: throw IllegalArgumentException("No year given and could not parse year from outermost package")
         if (yearPart.length == 4) yearPart.toInt()
         else (Year.now().toString().substring(0 until 2) + yearPart).toInt()
@@ -28,7 +28,7 @@ abstract class Day<T>(year: Int = - 1, day: Int = -1) {
         day
     } else {
         Regex("""\d{1,2}""").find(this.javaClass.simpleName)?.value?.toInt()
-            ?: Regex("""\d{1,2}""").find(this.javaClass.packageName.split(".").asReversed().joinToString("."))?.value?.toInt()
+            ?: Regex("""\d{1,2}""").find(this.javaClass.`package`.name.split(".").asReversed().joinToString("."))?.value?.toInt()
             ?: throw IllegalArgumentException("No day given and could not parse day from class name or package")
     }
 
