@@ -9,8 +9,13 @@ object Day02 : Day<List<String>>() {
     override fun prepare(input: String) = input.lines()
 
     override fun taskOne(input: List<String>): String {
-        val twos = input.filter { """(\w).*\1.*$""".toRegex()matches it }.size
-        val threes = input.filter { """(\w).*\1.*\1""".toRegex()matches it }.size
+        var twos = 0
+        var threes = 0
+        input.forEach { id ->
+            val grps = id.groupBy { it }.map { it.value.size }
+            twos += if (2 in grps) 1 else 0
+            threes += if (3 in grps) 1 else 0
+        }
         return (twos * threes).toString()
     }
 
