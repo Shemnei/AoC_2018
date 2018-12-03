@@ -6,6 +6,9 @@ import aoc18.util.MyAoCSettings
 
 object Day02 : Day<List<String>>() {
 
+    override val resultTaskOne: String = "6175"
+    override val resultTaskTwo: String = "asgwjcmzredihqoutcylvzinx"
+
     override fun prepare(input: String) = input.lines()
 
     override fun taskOne(input: List<String>): String {
@@ -31,5 +34,5 @@ object Day02 : Day<List<String>>() {
 
 fun main(args: Array<String>) {
     AoC.settings = MyAoCSettings
-    Day02.runLogging()
+    Day02.runTesting()
 }

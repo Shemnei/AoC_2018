@@ -6,6 +6,9 @@ import aoc18.util.MyAoCSettings
 
 object Day03 : Day<Map<Int, Rectangle>>() {
 
+    override val resultTaskOne: String = "113966"
+    override val resultTaskTwo: String = "235"
+
     override fun prepare(input: String): Map<Int, Rectangle> {
         return input.lines()
             .mapNotNull {
@@ -54,12 +57,11 @@ object Day03 : Day<Map<Int, Rectangle>>() {
                     it.intersection(clm.value) != null
                 }
             }
-            .first { !it.second }
-            .apply { println(this.second) }.first.toString()
+            .first { !it.second }.first.toString()
     }
 }
 
 fun main(args: Array<String>) {
     AoC.settings = MyAoCSettings
-    Day03.runLogging()
+    Day03.runTesting()
 }
