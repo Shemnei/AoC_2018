@@ -44,33 +44,42 @@ abstract class Day<T>(year: Int = - 1, day: Int = -1) {
     open fun taskOne(input: T): String = ""
     open fun taskTwo(input: T): String = ""
 
-    fun runDefaultOne() = taskOne(this.preparedInput)
-    fun runDefaultTwo() = taskTwo(this.preparedInput)
-
-
-    fun logOne(input: String) {
-        logOne(prepare(input))
-    }
     fun logOne(input: T) {
         var result = ""
         val timeMs = measureTimeMillis { result = taskOne(input) }
         println("Day ${this.day.toString().padStart(2, '0')} - Task 1 => $result [${timeMs}ms]")
     }
-    fun logTwo(input: String) {
+    fun logOne(input: String) {
         logOne(prepare(input))
     }
+
     fun logTwo(input: T) {
         var result = ""
         val timeMs = measureTimeMillis { result = taskTwo(input) }
         println("Day ${this.day.toString().padStart(2, '0')} - Task 2 => $result [${timeMs}ms]")
     }
+    fun logTwo(input: String) {
+        logTwo(prepare(input))
+    }
 
-    fun logDefaultOne() = logOne(this.preparedInput)
-    fun logDefaultTwo() = logTwo(this.preparedInput)
+
+    fun logOne() = logOne(this.preparedInput)
+    fun logTwo() = logTwo(this.preparedInput)
+
+    fun runLogging(input: T) {
+        logOne(input)
+        logTwo(input)
+    }
+
+    fun runLogging(input: String) {
+        val prepared = prepare(input)
+        logOne(prepared)
+        logTwo(prepared)
+    }
 
     fun runLogging() {
-        logDefaultOne()
-        logDefaultTwo()
+        logOne()
+        logTwo()
     }
 
     fun d(msg: String) = logger.debug(msg)
