@@ -3,6 +3,9 @@ package aoc18
 import aoc18.d01.Day01
 import aoc18.d02.Day02
 import aoc18.d03.Day03
+import aoc18.d04.Day04
+import aoc18.util.AoC
+import aoc18.util.MyAoCSettings
 import aoc18.util.SimpleResultFormat
 import klog.Logger
 import klog.Loggers
@@ -18,10 +21,13 @@ private val resultLogger: Logger = Loggers.get("AoC18").apply {
 val DAYS = arrayOf(
     Day01,
     Day02,
-    Day03
+    Day03,
+    Day04
 )
 
 fun main(args: Array<String>) {
+    AoC.settings = MyAoCSettings
+
     DAYS.forEach {
         resultLogger.verbose("DAY ${it.day}")
         it.runTesting()

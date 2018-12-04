@@ -30,6 +30,7 @@ src/main/kotlin/aoc18/util/MyAoCSettings.kt
 
 ### Input
 input_*/
+answers_*/
 
 ### Local Libs
 !libs/klog-1.0.0.jar
