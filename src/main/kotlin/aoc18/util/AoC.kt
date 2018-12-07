@@ -35,9 +35,11 @@ object AoC {
         require(nowEST >= dateEST) { "Date lies in the FUTURE!" }
     }
 
-    private fun formatTemplate(template: String, year: Int, day: Int, padDay: Boolean = true): String {
-        return template.replace("{{year}}", year.toString())
-            .replace("{{day}}", if (padDay) day.toString().padStart(2, '0') else day.toString())
+    private fun formatTemplate(template: String, year: Int, day: Int): String {
+        return template
+            .replace("{{year}}", year.toString())
+            .replace("{{day}}", day.toString())
+            .replace("{{dday}}", day.toString().padStart(2, '0'))
     }
 
     fun getInput(
@@ -73,7 +75,7 @@ object AoC {
     }
 
     private fun fetchInput(year: Int, day: Int, sessionToken: String): String {
-        val url = URL(formatTemplate(settings.INPUT_END_POINT, year, day, false))
+        val url = URL(formatTemplate(settings.INPUT_END_POINT, year, day))
         with(url.openConnection() as HttpsURLConnection) {
             requestMethod = "GET"
             setRequestProperty("Cookie", "session=$sessionToken")
@@ -120,7 +122,7 @@ object AoC {
     }
 
     private fun fetchAnswers(year: Int, day: Int, sessionToken: String): Pair<String, String> {
-        val url = URL(formatTemplate(settings.ANSWERS_END_POINT, year, day, false))
+        val url = URL(formatTemplate(settings.ANSWERS_END_POINT, year, day))
         with(url.openConnection() as HttpsURLConnection) {
             requestMethod = "GET"
             setRequestProperty("Cookie", "session=$sessionToken")
