@@ -1,5 +1,8 @@
 package aoc18.util
 
+import klog.format.ColoredFormatDecorator
+import klog.logger
+import klog.sink.ConsoleSink
 import java.net.URL
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -10,6 +13,12 @@ import javax.net.ssl.HttpsURLConnection
 // TODO: 04.12.2018 check for answers every call to test ? maybe let user set bool to indicate unlocked solutions
 // TODO: 04.12.2018 handle partial unlocked answers
 object AoC {
+
+    private val logger = logger(AoC::class.java.simpleName) {
+        this.logSinks.add(ConsoleSink().apply {
+            this.defaultFormat = ColoredFormatDecorator(SimpleTimeFormat())
+        })
+    }
 
     val MONTH_OF_YEAR = Month.DECEMBER
     var settings: AoCSettings = DefaultAoCSettings
@@ -116,13 +125,16 @@ object AoC {
             requestMethod = "GET"
             setRequestProperty("Cookie", "session=$sessionToken")
 
-            if (responseCode != 200) {
-                throw IllegalArgumentException("No input found for $url")
-            }
+            if (responseCode != 200) throw IllegalArgumentException("No input found for $url")
 
             val body = inputStream.readBytes().toString(Charsets.UTF_8).replace(" ", "").replace("\n", "")
             val answerRegex = """<p>Yourpuzzleanswerwas<code>([^<]+)</code>""".toRegex()
-            val answers = answerRegex.findAll(body).take(2).map { it.groupValues[1] }
+
+            val answers = answerRegex.findAll(body).take(2).map { it.groupValues[1] }.ifEmpty {
+                throw NoAnswerUnlockedException(year, day)
+            }
+            // FIXME: 07.12.2018 Handle only one answer unlocked
+
             return answers.first() to answers.last()
         }
     }

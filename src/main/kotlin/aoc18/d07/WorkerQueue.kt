@@ -2,25 +2,23 @@ package aoc18.d07
 
 import java.util.*
 
-data class WorkerQueue(val workerCount: Int, val input: Map<Char, MutableList<Char>>) {
+data class WorkerQueue(val workerCount: Int, val input: Map<Char, MutableSet<Char>>) {
 
     private val workers = (0 until workerCount).map { Worker() }.toTypedArray()
     private val inputCopy = HashMap(input)
     private val isDone: Boolean
-        get() = inputCopy.isEmpty()
-//        get() = inputCopy.isEmpty() && workers.all { it.task == null }
+        //        get() = inputCopy.isEmpty()
+        get() = inputCopy.isEmpty() && workers.all { it.task == null }
 
 
     private var totalTime = 0
+    private var completionOrder: String = ""
 
-    fun run(): Int {
+    fun run(): Pair<Int, String> {
         while (doCycle()) {
         }
 
-        totalTime += workers.filter { it.task != null && it.time > 0 }.maxBy { it.time }?.time ?: 0
-        workers.forEach { it.task = null; it.time = 0 }
-
-        return totalTime
+        return totalTime to completionOrder
     }
 
     private fun doCycle(): Boolean {
@@ -57,6 +55,7 @@ data class WorkerQueue(val workerCount: Int, val input: Map<Char, MutableList<Ch
     private fun freeWorkers() {
         workers.filter { it.time == 0 && it.task != null }.forEach { w ->
             inputCopy.mapValues { it.value.apply { remove(w.task) } }
+            completionOrder += w.task
             w.task = null
         }
     }

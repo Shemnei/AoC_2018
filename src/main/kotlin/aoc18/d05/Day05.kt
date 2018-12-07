@@ -7,9 +7,6 @@ import java.util.*
 
 object Day05 : Day<CharArray>() {
 
-    override val resultTaskOne: String = "9390"
-    override val resultTaskTwo: String = "5898"
-
     override fun prepare(input: String) = input.toCharArray()
 
     // < 69144

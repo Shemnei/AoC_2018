@@ -6,9 +6,6 @@ import aoc18.util.MyAoCSettings
 
 object Day03 : Day<Map<Int, Rectangle>>() {
 
-    override val resultTaskOne: String = "113966"
-    override val resultTaskTwo: String = "235"
-
     override fun prepare(input: String): Map<Int, Rectangle> {
         return input.lines()
             .mapNotNull {

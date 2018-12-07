@@ -9,9 +9,6 @@ import java.time.format.DateTimeFormatter
 
 object Day04 : Day<Set<Guard>>() {
 
-    override val resultTaskOne: String = "94040"
-    override val resultTaskTwo: String = "39940"
-
     override fun prepare(input: String): Set<Guard> {
         val guards = mutableMapOf<Int, Guard>()
         var currentGuard: Guard? = null

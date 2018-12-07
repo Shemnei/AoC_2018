@@ -4,9 +4,6 @@ import aoc18.util.*
 
 object Day01 : Day<List<Int>>() {
 
-    override val resultTaskOne: String = "522"
-    override val resultTaskTwo: String = "73364"
-
     override fun prepare(input: String): List<Int> = input.lines().map { it.toInt() }
 
     override fun taskOne(input: List<Int>) = input.sum().toString()

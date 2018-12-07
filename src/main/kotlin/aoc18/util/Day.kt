@@ -1,8 +1,8 @@
 package aoc18.util
 
 import klog.Logger
-import klog.Loggers
 import klog.format.ColoredFormatDecorator
+import klog.logger
 import klog.sink.ConsoleSink
 import java.time.Year
 import kotlin.system.measureTimeMillis
@@ -26,13 +26,13 @@ abstract class Day<T>(year: Int = -1, day: Int = -1) {
             ?: throw IllegalArgumentException("No day given and could not parse day from class name or package")
     }
 
-    val logger: Logger = Loggers.get(this.javaClass.simpleName).apply {
+    val logger: Logger = logger(this.javaClass.simpleName) {
         this.logSinks.add(ConsoleSink().apply {
             this.defaultFormat = ColoredFormatDecorator(SimpleTimeFormat())
         })
     }
 
-    private val resultLogger: Logger = Loggers.get("Day ${this.day.toString().padStart(2, '0')}").apply {
+    private val resultLogger: Logger = logger("Day ${this.day.toString().padStart(2, '0')}") {
         this.logSinks.add(ConsoleSink().apply {
             this.defaultFormat = ColoredFormatDecorator(SimpleResultFormat())
         })
@@ -41,8 +41,12 @@ abstract class Day<T>(year: Int = -1, day: Int = -1) {
     val input: String by lazy { AoC.getInput(this.year, this.day) }
     val preparedInput: T by lazy { prepare(this.input) }
 
-    open val resultTaskOne: String = ""
-    open val resultTaskTwo: String = ""
+    val answers: Pair<String?, String?> by lazy {
+        kotlin.runCatching { AoC.getAnswers(this.year, this.day) }.getOrDefault(null to null)
+    }
+
+    open val resultTaskOne: String? by lazy { this.answers.first }
+    open val resultTaskTwo: String? by lazy { this.answers.second }
 
     init {
         AoC.validateDate(this.year, this.day)
@@ -82,7 +86,7 @@ abstract class Day<T>(year: Int = -1, day: Int = -1) {
         logTwo(prepared)
     }
 
-    fun testOne(input: T = preparedInput, expected: String = resultTaskOne, logTask: Boolean = true) {
+    fun testOne(input: T = preparedInput, expected: String = resultTaskOne.toString(), logTask: Boolean = true) {
         resultLogger.verbose("---------- Starting Test of Task One ----------")
         val isValue = if (logTask) logOne(input) else taskOne(input)
         if (isValue != expected) {
@@ -94,7 +98,7 @@ abstract class Day<T>(year: Int = -1, day: Int = -1) {
 
     fun testOne(input: String, expected: String, logTask: Boolean = true) = testOne(prepare(input), expected, logTask)
 
-    fun testTwo(input: T = preparedInput, expected: String = resultTaskTwo, logTask: Boolean = true) {
+    fun testTwo(input: T = preparedInput, expected: String = resultTaskTwo.toString(), logTask: Boolean = true) {
         resultLogger.verbose("---------- Starting Test of Task Two ----------")
         val isValue = if (logTask) logTwo(input) else taskTwo(input)
         if (isValue != expected) {
@@ -108,8 +112,8 @@ abstract class Day<T>(year: Int = -1, day: Int = -1) {
 
     fun runTesting(
         input: T = preparedInput,
-        expectedOne: String = resultTaskOne,
-        expectedTwo: String = resultTaskTwo,
+        expectedOne: String = resultTaskOne.toString(),
+        expectedTwo: String = resultTaskTwo.toString(),
         logTask: Boolean = true
     ) {
         testOne(input, expectedOne, logTask)
