@@ -19,7 +19,7 @@ object Day05 : Day<CharArray>() {
 
     override fun taskTwo(input: CharArray): String {
         val types = input.map { it.toLowerCase() }.distinct()
-        return types.asSequence().map {  type ->
+        return types.asSequence().map { type ->
             react(input.toMutableList().filter { it != type && it != type.toUpperCase() }).size
         }.min().toString()
     }

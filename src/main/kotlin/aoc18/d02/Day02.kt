@@ -25,7 +25,13 @@ object Day02 : Day<List<String>>() {
     override fun taskTwo(input: List<String>): String {
         input.forEach { id ->
             val charsId = id.toCharArray()
-            val r = input.firstOrNull { box -> box.toCharArray().zip(charsId).filter { it.first != it.second }.size == 1 }
+            val r = input.firstOrNull { box ->
+                box.toCharArray()
+                    .zip(charsId)
+                    .filter {
+                        it.first != it.second
+                    }.size == 1
+            }
             if (r != null) return r.filter { it in id }
         }
         return "Error"

@@ -30,7 +30,7 @@ object Day03 : Day<Map<Int, Rectangle>>() {
 
         input
             .asSequence()
-            .map{ clm ->
+            .map { clm ->
                 claims.remove(clm.key)!!
                 claims.values.mapNotNull {
                     it.intersection(clm.value)

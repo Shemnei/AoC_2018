@@ -7,7 +7,7 @@ import klog.sink.ConsoleSink
 import java.time.Year
 import kotlin.system.measureTimeMillis
 
-abstract class Day<T>(year: Int = - 1, day: Int = -1) {
+abstract class Day<T>(year: Int = -1, day: Int = -1) {
 
     val year: Int = if (year > 2014) {
         year
@@ -106,7 +106,12 @@ abstract class Day<T>(year: Int = - 1, day: Int = -1) {
 
     fun testTwo(input: String, expected: String, logTask: Boolean = true) = testTwo(prepare(input), expected, logTask)
 
-    fun runTesting(input: T = preparedInput, expectedOne: String = resultTaskOne, expectedTwo: String = resultTaskTwo, logTask: Boolean = true) {
+    fun runTesting(
+        input: T = preparedInput,
+        expectedOne: String = resultTaskOne,
+        expectedTwo: String = resultTaskTwo,
+        logTask: Boolean = true
+    ) {
         testOne(input, expectedOne, logTask)
         testTwo(input, expectedTwo, logTask)
     }
